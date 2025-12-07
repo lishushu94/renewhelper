@@ -8,7 +8,10 @@
 
 **RenewHelper** is a full-stack service lifecycle reminder and management tool based on **Cloudflare Workers**. It is designed to manage periodic subscriptions, domain renewals, server expirations, and more. It requires no server (Serverless), incurs zero hosting costs, and features a stunning Mecha-style UI, a powerful Lunar/Solar calendar core, multi-channel notifications, and iCal schedule synchronization.
 
-_((Insert screenshot here))_
+<div align="center">
+  <img src="./assets/mainUI_darkEN_shot.png" alt="RenewHelper 界面预览" width="800">
+  <img src="./assets/mainUI_lightCN_shot.png" alt="RenewHelper 界面预览" width="800"> 
+</div>
 
 ## ✨ Key Features
 
@@ -119,18 +122,22 @@ After deployment, visit your Worker URL or custom domain (e.g., `https://renewhe
     - **Timezone**: Critical! Select your local timezone (e.g., `Asia/Shanghai` or `America/New_York`). This determines the accuracy of reminders and calendar events.
     - **Master Notification Switch**: Enable to configure specific notification channels.
 
+<div align="center">
+  <img src="./assets/configUIhelp_darkEN_shot.png" alt="RenewHelper 界面预览" width="800">
+</div>
+
 ### 📢 Notification Channels
 
 Configure these in "Settings" -> "Notifications":
 
-| Channel | Parameter Description | How to Obtain/Configure |
-| :--- | :--- | :--- |
-| **Telegram** | **Token**: Bot Token<br>**Chat ID**: Your User ID or Group ID | 1. Create a bot via [@BotFather](https://t.me/BotFather) to get the Token.<br>2. Visit `https://api.telegram.org/bot<YourToken>/getUpdates` in your browser.<br>3. Send a message to your bot.<br>4. Refresh the URL above to find your Chat ID. |
-| **Bark** (iOS) | **Server**: Server URL<br>**Device Key**: Key | 1. Download the Bark App from the App Store.<br>2. Copy the Server URL and Key displayed in the App. |
-| **PushPlus** | **Token**: User Token | 1. Visit [PushPlus Official Site](https://www.pushplus.plus/).<br>2. Login via WeChat to get your Token. |
-| **NotifyX** | **API Key**: Key | 1. Visit [NotifyX Official Site](https://www.notifyx.cn/).<br>2. Login to get your API Key. |
+| Channel            | Parameter Description                                                       | How to Obtain/Configure                                                                                                                                                                                                                                  |
+| :----------------- | :-------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Telegram**       | **Token**: Bot Token<br>**Chat ID**: Your User ID or Group ID               | 1. Create a bot via [@BotFather](https://t.me/BotFather) to get the Token.<br>2. Visit `https://api.telegram.org/bot<YourToken>/getUpdates` in your browser.<br>3. Send a message to your bot.<br>4. Refresh the URL above to find your Chat ID.         |
+| **Bark** (iOS)     | **Server**: Server URL<br>**Device Key**: Key                               | 1. Download the Bark App from the App Store.<br>2. Copy the Server URL and Key displayed in the App.                                                                                                                                                     |
+| **PushPlus**       | **Token**: User Token                                                       | 1. Visit [PushPlus Official Site](https://www.pushplus.plus/).<br>2. Login via WeChat to get your Token.                                                                                                                                                 |
+| **NotifyX**        | **API Key**: Key                                                            | 1. Visit [NotifyX Official Site](https://www.notifyx.cn/).<br>2. Login to get your API Key.                                                                                                                                                              |
 | **Resend** (Email) | **API Key**: Resend Key<br>**From**: Sender Email<br>**To**: Receiver Email | 1. Register at [Resend](https://resend.com/).<br>2. Bind a domain and get an API Key.<br>3. `From` must be a verified domain email (e.g., `alert@yourdomain.com`). If you don't have one, use `onboarding@resend.dev` and send to your registered email. |
-| **Webhook** | **URL**: POST URL | For custom development. The system sends a POST request: `{ "title": "...", "content": "..." }`. |
+| **Webhook**        | **URL**: POST URL                                                           | For custom development. The system sends a POST request: `{ "title": "...", "content": "..." }`.                                                                                                                                                         |
 
 ---
 
@@ -147,6 +154,10 @@ Configure these in "Settings" -> "Notifications":
 - **Automation Policy**:
   - **Auto-Renew**: Automatically extends the next due date by one cycle upon expiration.
   - **Auto-Disable**: Automatically marks the service as disabled if it remains overdue for a specified number of days.
+
+<div align="center">
+  <img src="./assets/AddUI_darkEN_shot.png" alt="RenewHelper 界面预览" width="600">
+</div>
 
 ### Viewing Logs
 

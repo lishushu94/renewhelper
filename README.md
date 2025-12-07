@@ -8,7 +8,10 @@
 
 **RenewHelper - 时序·守望** 是一款基于 **Cloudflare Workers** 的全栈服务生命周期提醒、管理工具。它专为管理周期性订阅、域名续费、服务器到期等场景设计。无需服务器，零成本托管，提供精美的机甲风（Mecha-style）UI 界面、强大的农历/公历计算核心、多渠道通知推送能力以及 iCal 日程同步。
 
-_（实际的截图）_
+<div align="center">
+  <img src="./assets/mainUI_lightCN_shot.png" alt="RenewHelper 界面预览" width="800">
+  <img src="./assets/mainUI_darkEN_shot.png" alt="RenewHelper 界面预览" width="800">
+</div>
 
 ## ✨ 核心特性
 
@@ -118,6 +121,10 @@ _（实际的截图）_
     - **时区设置**：非常重要！请选择您所在的时区（如 `Asia/Shanghai`），这决定了提醒和日历的准确性。
     - **通知总开关**：开启后可配置具体的推送渠道。
 
+<div align="center">
+  <img src="./assets/configUIhelp_darkCN_shot.png" alt="RenewHelper 界面预览" width="800">
+</div>
+
 ### 📢 推送渠道配置说明
 
 在“系统设置” -\> “通知配置”中填写：
@@ -146,6 +153,10 @@ _（实际的截图）_
 - **自动化策略**：
   - **自动续期**：到期后自动将下次到期日顺延一个周期。
   - **自动禁用**：到期超过指定天数未处理，自动标记为禁用。
+
+<div align="center">
+  <img src="./assets/addUI_darkCN_shot.png" alt="RenewHelper 界面预览" width="600">
+</div>
 
 ### 查看日志
 
@@ -182,13 +193,15 @@ _（实际的截图）_
 如果您觉得 RenewHelper 对您有帮助，欢迎请作者喝一杯咖啡 ☕️。您的支持是我持续更新的动力！
 
 **加密货币** - 国际用户
+
 - **USDT (TRC20)**: `(此处填写您的 TRC20 收款地址)`
 - **ETH (ERC20)**: `(此处填写您的 ETH 收款地址)`
 
 **爱发电** - 国内用户
-- https://aifadian.com/a/  
+
+- https://aifadian.com/a/
+
 ---
 
 **License**: MIT
 Copyright (c) 2025 LOSTFREE
-

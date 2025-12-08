@@ -1,10 +1,10 @@
 /**
- * Cloudflare Worker: RenewHelper (v1.3)
+ * Cloudflare Worker: RenewHelper (v1.3.1)
  * Author: LOSTFREE
  * Features: Multi-Channel Notify, Import/Export, Channel Test, Bilingual UI, Precise ICS Alarm
  */
 
-const APP_VERSION = "v1.3";
+const APP_VERSION = "v1.3.1";
 
 // ==========================================
 // 1. Core Logic (Lunar & Calc)
@@ -38,7 +38,7 @@ const LUNAR_DATA = {
     0x055a0, 0x0aba4, 0x0a5b0, 0x052b0, 0x0b273, 0x06930, 0x07337, 0x06aa0,
     0x0ad50, 0x14b55, 0x04b60, 0x0a570, 0x054e4, 0x0d160, 0x0e968, 0x0d520,
     0x0daa0, 0x16aa6, 0x056d0, 0x04ae0, 0x0a9d4, 0x0a2d0, 0x0d150, 0x0f252,
-    0x0d520,
+    0x0d520
   ],
   gan: "甲乙丙丁戊己庚辛壬癸".split(""),
   zhi: "子丑寅卯辰巳午未申酉戌亥".split(""),
@@ -443,14 +443,26 @@ const DataStore = {
     return { settings, items: pkg.items, version: pkg.version };
   },
 
+// 【修复】增加 try-catch 容错，防止日志数据损坏导致无法写入
   async getLogs(env) {
-    return JSON.parse((await env.RENEW_KV.get(this.KEYS.LOGS)) || "[]");
+    try {
+      const raw = await env.RENEW_KV.get(this.KEYS.LOGS);
+      return raw ? JSON.parse(raw) : [];
+    } catch (e) {
+      // 如果解析失败（数据损坏），返回空数组，确保新日志能写入
+      return [];
+    }
   },
 
   async saveLog(env, entry) {
-    const logs = await this.getLogs(env);
-    logs.unshift(entry);
-    await env.RENEW_KV.put(this.KEYS.LOGS, JSON.stringify(logs.slice(0, 30)));
+    try {
+      const logs = await this.getLogs(env);
+      logs.unshift(entry);
+      // 限制保留最近 30 条
+      await env.RENEW_KV.put(this.KEYS.LOGS, JSON.stringify(logs.slice(0, 30)));
+    } catch (e) {
+      console.log(`[ERR] Log save failed: ${e.message}`);
+    }
   },
 };
 
@@ -1053,16 +1065,24 @@ async function checkAndRenew(env, isSched, lang = "zh") {
     }
   }
 
-  // 将 monitor 列表映射为 'normal' 动作
-  // 只要有任何常规检查命中（在提醒期内），就会保存日志
   const act = [
     upd.length ? "renew" : null,
     dis.length ? "disable" : null,
     trig.length ? "alert" : null,
     monitor.length ? "normal" : null,
   ].filter(Boolean);
+  
+  const hasError = logs.some(l => l.includes('[WARN]') || l.includes('[ERR]'));
 
-  if (act.length) {
+  if (act.length === 0) {
+      act.push("normal"); // 无论手动还是 Cron，只要没动作都记为 Normal
+  }
+  // 如果有错误，确保升级为 Alert
+  if (hasError && !act.includes("alert")) {
+      act.push("alert");
+  }
+  
+  if (act.length > 0) {
     await DataStore.saveLog(env, {
       time: new Date().toISOString(),
       trigger: isSched ? "CRON" : "MANUAL",
